@@ -12,22 +12,22 @@
                 }
             };
             var jsonData = JSON.stringify(data);
-            Android.openUrlInApp(jsonData);
+            Android.openUrlExternal(jsonData);
         }
 
-        function openUrlInApp(url) {
+         function openUrlInApp(url) {
             var data = {
                 payload: {
                     url: url
                 }
             };
-            if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.openUrlInApp && window.webkit.messageHandlers.openUrlInApp.postMessage) {
-                window.webkit.messageHandlers.openUrlInApp.postMessage(data);
-            } else if (window.Android && window.Android.openUrlInApp) {
+            if(window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.openUrlExternal && window.webkit.messageHandlers.openUrlExternal.postMessage){
+                window.webkit.messageHandlers.openUrlExternal.postMessage(data);
+            } else if(Android && Android.openUrlExternal){
                 var jsonData = JSON.stringify(data);
-                window.Android.openUrlInApp(jsonData);
+                Android.openUrlExternal(jsonData);
             } else {
-                console.log("Attempting to call openUrlInApp outside the app");
+                console.log("Attempting to call openUrlInApp outside the app")
             }
         }
 
@@ -37,23 +37,27 @@
                     url: "https://fancompaniondev.page.link/Ecgnn9LeEMB473Uy6"
                 }
             };
-            window.webkit.messageHandlers.openUrlInApp.postMessage(data);
+            window.webkit.messageHandlers.openUrlExternal.postMessage(data);
         }
 
         function invokeAndroid() {
             callAndroidFunction(); // This assumes you want to reuse the existing logic
         }
+
     </script>
 </head>
 <body>
-    <div style="margin-bottom: 20px;">
-        <a href="javascript:calliOSFunction()">Open URL on iOS</a>
-    </div>
-    <div style="margin-bottom: 20px;">
-        <a href="javascript:callAndroidFunction()">Open URL on Android</a>
-    </div>
-    <div>
-        <a href="javascript:openUrlInApp('https://fancompaniondev.page.link/Ecgnn9LeEMB473Uy6')">Open URL on Both</a>
-    </div>
+<br/><br/>
+<div>
+    <a href="javascript:calliOSFunction()">Open URL on iOS (v2)</a>
+</div>
+<br/><br/>
+<div>
+    <a href="javascript:callAndroidFunction()">Open URL on Android (v2)</a>
+</div>
+<br/><br/>
+<div>
+<a href="javascript:openUrlInApp('https://fancompaniondev.page.link/Ecgnn9LeEMB473Uy6')">Open URL on Both (v2)</a>
+</div>
 </body>
 </html>
