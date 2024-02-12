@@ -15,6 +15,22 @@
             Android.openUrlInApp(jsonData);
         }
 
+         function openUrlInApp(url) {
+            var data = {
+                payload: {
+                    url: url
+                }
+            };
+            if(window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.openUrlInApp && window.webkit.messageHandlers.openUrlInApp.postMessage){
+                window.webkit.messageHandlers.openUrlInApp.postMessage(data);
+            } else if(Android && Android.openUrlInApp){
+                var jsonData = JSON.stringify(data);
+                Android.openUrlInApp(jsonData);
+            } else {
+                console.log("Attempting to call openUrlInApp outside the app")
+            }
+        }
+
         function calliOSFunction() {
             var data = {
                 payload: {
@@ -27,13 +43,21 @@
         function invokeAndroid() {
             callAndroidFunction(); // This assumes you want to reuse the existing logic
         }
+
     </script>
 </head>
 <body>
 <br/><br/>
 <div>
     <a href="javascript:calliOSFunction()">Open URL on iOS</a>
+</div>
+<br/><br/>
+<div>
     <a href="javascript:callAndroidFunction()">Open URL on Android</a>
+</div>
+<br/><br/>
+<div>
+<a href="javascript:openUrlInApp('https://fancompaniondev.page.link/Ecgnn9LeEMB473Uy6')">Open URL on Both</a>
 </div>
 </body>
 </html>
